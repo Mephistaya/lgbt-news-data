@@ -1,0 +1,7 @@
+# number of articles in database vs. actual number of articles in NYT
+bisexual:	 4,920 of  5,152	95.5%
+gay community:	 1,818 of  1,861	97.7%
+homosexual:	15,086 of 15,659	96.3%
+lesbian:	15,249 of 16,363	93.2%
+transgender:	 6,138 of  6,713	91.4%
+transsexual:	 1,229 of  1,251	98.2%
