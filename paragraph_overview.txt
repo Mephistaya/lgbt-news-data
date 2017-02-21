@@ -1,0 +1,8 @@
+# Anzahl an Paragraphen, die das Stichwort aufweisen
+# zu diskutieren: nur wenige Paragraph enthalten tatsächlich das Stichwort: Volltext extrahieren
+transgender	2973
+transsexual	279
+homosexual	5263
+lesbian	5086
+gay community	377
+bisexual	1495
