@@ -1,0 +1,11 @@
+Jede Datei enthält "markante" Kookkurrenzen für eine bestimmte Dekade,
+also z.B. alle Wörter, die mit 'homosexual' in den Jahren 1990-1999 auftreten.
+
+Jede Zeile ist wie folgt aufgebaut:
+<Zielwort>	<Kookkurrent>	<Häufigkeit der Kookkurrenz>	<Signifikanz>
+
+Aufgelistet sind alle Kookkurrenzen, die
+	a) signifikant sind, oder
+	b) häufiger vorkommen als die Durchschnittskookkurrenz in dieser Dekade aber mind. zweimal.
+
+Kookkurrenzen nach a) sind natürlich aussagekräftiger als die nach b).
