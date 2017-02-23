@@ -1,0 +1,3 @@
+id	context	predictions	aggregatedPredictions	category
+369	However, that novel, ''Queer,'' will appear next fall, one of seven new Burroughs books that Viking Penguin will publish over the next five years.	[[0.077,0.298,0.537,0.072,0.016]]	[0.077,0.298,0.537,0.072,0.016]	neutral
+370	LEAD: Leaders of gay- and lesbian-rights groups around New York State have expressed outrage over comments made last week by Peter L. Broderick, the Niagara County District Attorney, who called homosexuals ''queers'' and ''sick people'' and said they ought not to receive special consideration when they are victims of bias-related crimes.	[[0.156,0.544,0.265,0.023,0.012]]	[0.156,0.544,0.265,0.023,0.012]	negative
