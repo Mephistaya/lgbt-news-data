@@ -1,0 +1,67 @@
+@InProceedings{Socher+al:2013,
+author = {Socher, Richard and Perelygin, Alex and Wu, Jean and Chuang, Jason and Manning, Christopher D. and Ng, Andrew and Potts, Christopher},
+title = {Recursive deep models for semantic compositionality over a sentiment tree-bank},
+booktitle = {Proceedings of the conference on empirical methods in natural language processing},
+pages = {1631-1642},
+year = {2013}
+}
+
+@book{Manning+Schuetze:2003,
+title = {Foundations of statistical natural language processing},
+author = {Manning, Christopher D. and Schütze, Hinrich},
+address = {Cambridge (Mass.)},
+publisher = {MIT Press},
+year = {2003}
+}
+
+@Article{Oxford,
+author = {Oxford Dictionary, online},
+title = {How many words are there in the {E}nglish language?},
+journal = {https://en.oxforddictionaries.com/explore/how-many-words-are-there-in-the-english-language},
+note = {last call: 2017, Feb.~20th}
+}
+
+@article{Sichel:1974,
+  title={On a distribution representing sentence-length in written prose},
+  author={Sichel, HS},
+  journal={Journal of the Royal Statistical Society. Series A (General)},
+  pages={25-34},
+  year={1974}
+}
+
+@inproceedings{Charniak:1996,
+  title={Tree-bank grammars},
+  author={Charniak, Eugene},
+  booktitle={Proceedings of the National Conference on Artificial Intelligence},
+  pages={1031--1036},
+  year={1996}
+}
+
+@Inbook{Bordag2008,
+author="Bordag, Stefan",
+editor="Gelbukh, Alexander",
+title="A Comparison of Co-occurrence and Similarity Measures as Simulations of Context",
+bookTitle="Computational Linguistics and Intelligent Text Processing: 9th International Conference, CICLing 2008, Haifa, Israel, February 17-23, 2008. Proceedings",
+year="2008",
+publisher="Springer Berlin Heidelberg",
+address="Berlin, Heidelberg",
+pages="52--63",
+isbn="978-3-540-78135-6",
+doi="10.1007/978-3-540-78135-6_5",
+url="http://dx.doi.org/10.1007/978-3-540-78135-6_5"
+}
+
+@InCollection{Bordag2008,
+author = {Bordag, Stefan},
+title = {A Comparison of Co-occurrence and Similarity Measures as Simulations of Context},
+booktitle = {Computational Linguistics and Intelligent Text Processing: 9th International Conference},
+pages = {52--63},
+publisher = {Springer},
+year = {2008},
+editor = {Gelbukh, Alexander},
+address = {Berlin}
+}
+
+
+
+
