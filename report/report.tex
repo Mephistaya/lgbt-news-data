@@ -28,12 +28,22 @@
 \maketitle
 
 {\footnotesize
-\paragraph*{Abstract} Here are 150 to 200 words which constitute our abstract.
+\paragraph*{Abstract} For the last decades, there has been a rapid shift from discrimination and exclusion to integration and equality of lesbian, gay, bisexual, and transgender (LGBT) people. Based on articles of New York Times, this work pursures the question whether there has been a shift within LGBT-related reporting as well. The two analyzed aspects of reporting are the manner how the journalist reports on LGBT-related events, and the topics within the articles. Sentiment analysis revealed that the how of reporting is constant over all newspaper articles. The sentiment is mostly determined by the newspaper genre. Nevertheless, topic modeling shows that different topcis are relevant in different times. The proposed hypothesis is that knowing the topic shift of some ``older'' LGBT term as \textit{homosexual} allows a projection to ``newer'' terms, e.g. \textit{transgender}.
 }
 
 
 \section{Introduction}
-This is our pretty Introduction.
+On September the 29th in the year 2016, California legalized as the first nation in the United States an all-gender restroom access law, which allowed people of all genders to use the former single-occupenced restrooms in public places \citep{Ring:2016}. According to that, there where a lot of articles in the newspapers dealing with this new law as a positive aspect and great LGBT-achievement. There were people discussion openly about the situation of transgender people, it was called a big step towards equality and LGBT was all in all a positively discussed theme in the news.
+
+Thinking of the beginning of LGBT-popularity, there is an other atmosphere calling to mind. Only a few decades ago, there were a lot more harass and discrimination against sexualy other-orientated people. In many countries homosexuality was treated as a crime or a mental illness. Over the years, the LGBT-community has gained more and more attention. Comparing the situation not that many years ago with the mood today, there has been a big change. It is this change we are interested in. What has the LGBT-community achieved over the years and how is it shown in the media? What influenced a time? Can we make a future forecast according to the changes in the past?
+
+As a good indicator of a timeperiod we determined the newspaper as it is well known for representing local and global issues in an objective way. We have chosen the New York Times because it is an important and well known press with the intention to report unbiased. In addition, it has a good API to gather data with which we could work afterwards. On this basis, we were interested in two thing: How does the sentiment of the articles changes over the years? And what other topics show up accompanying LGBT search terms.
+
+The first question is addressed by sentiment analysis \citep{Nasukawa+Yi:2003, Godbole+al:2007, Cambria+al:2013}. It is part of text analysis in the context of natural language processing and computer linguistics. While telling facts, a writer can still transmit his opinion and judgments or influence the reader by emotional talking or unbiased reporting. The sentiment analysis tries to identify the attitude of the writer towards the topic he is writing about and to evaluate it.
+
+Topic modeling \citep{Wallach:2006, Blei:2012} meanwhile does not care about the `how' it is told, but more what the text is about. It is also part of the text analysis but while the sentiment somehow looks for the connotation of words, the topic analysis deals with the words themselves. Every text can be divided in some main-subjects it is dealing with. Manually, these subjects can be easily found by reading, clustering and brainstorming, but for a mass of data, an automatic solution has to be applied. We targeted a simplified approach of topic modeling based on automatic extraction of words significantly cooccurring with an LGBT-related term. Then, the topics were manually created based on these cooccurrences. Such a semi-automatic approach has the advantage that the clustering of cooccurrences is of high quality.
+
+All in all, this project is about gathering data according to LGBT-topics across a huge timespan, finding topics and sentiments for the data and at least analyzing the change over time. Our goal is to find and portrait a significant change in the reporting on LGBT-related topics from 1850 to today, display the achievements in the rights and equality of LGBT-people and perhaps make a little prognosis about future changes according to the behavior we detected in the past. 
 
 \section{Workflow \& Implementation}
 In the following, the general workflow for analyzing the LGBT reception within newspapers is described. Subsequently, the concrete decisions concerning the implementation are addressed.
@@ -200,10 +210,12 @@ To summarize, the sentiment analysis showed no differences between target terms 
 This is our great topic modeling.
 
 \section{Discussion}
-This is our insightful discussion.
+First, implementational issues and technical challenges of the current workflow are discussed. Second, the discussion focuses on the evaluation of the results. Finally, proposals for future investigations are pointed out.
 
 \subsection{Implementation Issues}
 In order to compare the reception of LGBT-related terms in different newspapers, it is necessary to integrate further newspaper articles into the database. Especially for The Guardian\footnote{\url{http://open-platform.theguardian.com/}}, the integration into the database is no problem since the Guardian API returns less information than the NYT API, e.g. no publication date or lead paragraph. At the same time, this is a problem because the only information is the web URL to the article. Thus, in order to get the publication date and textual information, the workflow has to be extended by a further request for receiving the HTML page of the full article as well as by a parser for extracting relevant information from this HTML document. As soon as such an extension has been implemented, it can be used to get the full article also from the NYT archive. The full article body would enable a more comprehensive topic modeling. Attention should be paid that the Guardian API provides only access to publications dating back to 1999.
+
+In addition, enriching the database by further articles and other newspapers will weaken the current semi-automatic approach. A larger data set will no longer allow to manually evaluate the cooccurrences in order to find topics. Thus, the topics have to be created automatically as well.
 
 A general problem with the newspaper archive APIs is that the access is limited. Assume that there are $150 \cdot 10^3$ articles for a certain query term as it is the case for \textit{gay} in the NYT archive. Since the NYT API allows requesting only $10\cdot 10^3$ articles per day, collecting the whole result set would take 15 days. The same amount of articles is no problem for the Guardian API where $250\cdot 10^3$ articles can be requested per day.\footnote{The Guardian allows $5\cdot 10^3$ calls per day and a maximum amount of 50 articles per call.} Additionally, only the first 1200 articles can be addressed within requests to the NYT API. Consequently, in order to get all articles, each call should not return more results than this number. In our workflow, the publication date was restricted in order to obtain an appropriate result set size.
 
