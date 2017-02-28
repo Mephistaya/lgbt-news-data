@@ -10,6 +10,7 @@
 \usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
 
 \usepackage{booktabs}
+\usepackage[font=small]{caption}
 
 \usepackage{hyperref}
 
@@ -207,7 +208,109 @@ football &  13.6\% & 44.8\% & 21.3\% & 14.4\% & 5.9\%\\
 To summarize, the sentiment analysis showed no differences between target terms or different times. A detailed evaluation of the precision of the sentiments is presented in the discussion.
 
 \subsection{Simple Topic Modeling}
-This is our great topic modeling.
+For all LGBT terms, ten main topics could be determined. First, the topic \textsc{lgbt-related terms} describes the occurrence of a target term with other LGBT-related terms. Fig.~\ref{fig:topic_lgbt} shows whether a target term appears in contexts with this topic at a certain time. Dashed lines indicate that the topic is present but not very often whereas a solid line denotes that the topic is very frequent. The topics of particular target terms are discussed below.
+
+Second, \textsc{rights/law} is a very frequent topic. It contains court decisions or governmental statements to LGBT issues. Its incidences are shown in Fig.~\ref{fig:topic_rigths}. Third, an important topic is \textsc{discrimination/violence}, see Fig.~\ref{fig:topic_violence}. It covers not only discriminating utterances but also bodily harm and murder. The topic \textsc{sex/identity/relationship} covers the question of social and psychological identity as well as (same-sex) marriage. It is shown in Fig.~\ref{fig:topic_identity}. The next two topics \textsc{military} and \textsc{religion} describe the acceptance of LGBT people within a certain social environment, namely the military, Fig.~\ref{fig:topic_military}, and the religious institutions, Fig.~\ref{fig:topic_religion}. In addition, the topic \textsc{activists/movement/organizations} occurs whenever it is reported on people standing up for LGBT rights and equality. Its incidences is visualized in Fig.~\ref{fig:topic_activ}. Another topic, especially frequent in the context of AIDS in the 1980s, is \textsc{health}, see Fig.~\ref{fig:topic_health}. The topic \textsc{television/film/other media} is assigned to articles talking about LGBT people in movies, series or other media. The incidences of this topic are shown in Fig.~\ref{fig:topic_tv}. Finally, many articles deal with the acceptance and integration of LGBT people in educational institutions. The occurences of this topic \textsc{school} are presented in Fig.~\ref{fig:topic_school}.
+
+
+
+
+\begin{figure*}
+\begin{minipage}{0.48\textwidth}
+\includegraphics[width=\columnwidth]{figures/topic_lgbt}
+\caption{Incidences of \textsc{lgbt-related terms}.} \label{fig:topic_lgbt}
+
+\includegraphics[width=\columnwidth]{figures/topic_rights}
+\caption{Incidences of \textsc{righs/law}.} \label{fig:topic_rigths}
+
+\includegraphics[width=\columnwidth]{figures/topic_violence}
+\caption{Incidences of \textsc{discrimination/violence}.} \label{fig:topic_violence}
+
+\includegraphics[width=\columnwidth]{figures/topic_identity}
+\caption{Incidences of \textsc{sex/identity/relationship}.} \label{fig:topic_identity}
+
+\includegraphics[width=\columnwidth]{figures/topic_military}
+\caption{Incidences of \textsc{military}.} \label{fig:topic_military}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+\includegraphics[width=\columnwidth]{figures/topic_religion}
+\caption{Incidences of \textsc{religion}.} \label{fig:topic_religion}
+
+\includegraphics[width=\columnwidth]{figures/topic_activists}
+\caption{Incidences of \textsc{activists/movement/org.}.} \label{fig:topic_activ}
+
+\includegraphics[width=\columnwidth]{figures/topic_health}
+\caption{Incidences of \textsc{health}.} \label{fig:topic_health}
+
+\includegraphics[width=\columnwidth]{figures/topic_tv}
+\caption{Incidences of \textsc{television/film/other media}.} \label{fig:topic_tv}
+
+\includegraphics[width=\columnwidth]{figures/topic_school}
+\caption{Incidences of \textsc{school}.} \label{fig:topic_school}
+\end{minipage}
+\end{figure*}
+
+
+%\begin{figure}
+%\centering
+%\includegraphics[width=\columnwidth]{figures/topic_lgbt}
+%\caption{Incidence of the topic \textsc{lgbt-related terms}.}
+%\end{figure}
+%
+%\begin{figure}
+%\centering
+%\includegraphics[width=\columnwidth]{figures/topic_rights}
+%\caption{Incidence of the topic \textsc{righs/law}.}
+%\end{figure}
+%
+%\begin{figure}
+%\centering
+%\includegraphics[width=\columnwidth]{figures/topic_violence}
+%\caption{Incidence of the topic \textsc{discrimination/violence}.}
+%\end{figure}
+%
+%\begin{figure}
+%\centering
+%\includegraphics[width=\columnwidth]{figures/topic_identity}
+%\caption{Incidence of the topic \textsc{sex/identity/relationship}.}
+%\end{figure}
+%
+%\begin{figure}
+%\centering
+%\includegraphics[width=\columnwidth]{figures/topic_military}
+%\caption{Incidence of the topic \textsc{military}.}
+%\end{figure}
+%
+%\begin{figure}
+%\centering
+%\includegraphics[width=\columnwidth]{figures/topic_religion}
+%\caption{Incidence of the topic \textsc{religion}.}
+%\end{figure}
+%
+%\begin{figure}
+%\centering
+%\includegraphics[width=\columnwidth]{figures/topic_activists}
+%\caption{Incidence of the topic \textsc{activists/movement/organizations}.}
+%\end{figure}
+%
+%\begin{figure}
+%\centering
+%\includegraphics[width=\columnwidth]{figures/topic_health}
+%\caption{Incidence of the topic \textsc{health}.}
+%\end{figure}
+%
+%\begin{figure}
+%\centering
+%\includegraphics[width=\columnwidth]{figures/topic_tv}
+%\caption{Incidence of the topic \textsc{television/film/other media}.}
+%\end{figure}
+%
+%\begin{figure}
+%\centering
+%\includegraphics[width=\columnwidth]{figures/topic_school}
+%\caption{Incidence of the topic \textsc{school}.}
+%\end{figure}
 
 \section{Discussion}
 First, implementational issues and technical challenges of the current workflow are discussed. Second, the discussion focuses on the evaluation of the results. Finally, proposals for future investigations are pointed out.
