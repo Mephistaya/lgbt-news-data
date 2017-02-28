@@ -23,6 +23,7 @@
 \author{Magdalena Bönisch \and Till Haubenreißer \and Maximilian Möller}
 \publishers{\emph{Universität Leipzig, Introduction to Digital Humanities (Dr. Köntges)}}
 
+
 \begin{document}
 \onehalfspacing
 
@@ -44,9 +45,11 @@ The first question is addressed by sentiment analysis \citep{Nasukawa+Yi:2003, G
 
 Topic modeling \citep{Wallach:2006, Blei:2012} meanwhile does not care about the `how' it is told, but more what the text is about. It is also part of the text analysis but while the sentiment somehow looks for the connotation of words, the topic analysis deals with the words themselves. Every text can be divided in some main-subjects it is dealing with. Manually, these subjects can be easily found by reading, clustering and brainstorming, but for a mass of data, an automatic solution has to be applied. We targeted a simplified approach of topic modeling based on automatic extraction of words significantly cooccurring with an LGBT-related term. Then, the topics were manually created based on these cooccurrences. Such a semi-automatic approach has the advantage that the clustering of cooccurrences is of high quality.
 
-All in all, this project is about gathering data according to LGBT-topics across a huge timespan, finding topics and sentiments for the data and at least analyzing the change over time. Our goal is to find and portrait a significant change in the reporting on LGBT-related topics from 1850 to today, display the achievements in the rights and equality of LGBT-people and perhaps make a little prognosis about future changes according to the behavior we detected in the past. 
+All in all, this project is about gathering data according to LGBT-topics across a huge timespan, finding topics and sentiments for the data and at least analyzing the change over time. Our goal is to find and portrait a significant change in the reporting on LGBT-related topics from 1850 to today, display the achievements in the rights and equality of LGBT-people and perhaps make a little prognosis about future changes according to the behavior we detected in the past.
 
-\section{Workflow \& Implementation}
+The paper is structured as follows. In section \ref{sec:workflow}, the workflow as well as decisions concerning the implementation are elucidated. Section \ref{sec:underlyingdata} presents the data underlying the subsequent analyses described in the workflow. Section \ref{sec:results} shows the results for the sentiment analysis as well as for the simple topic model approach. The next section \ref{sec:discussion} starts with technical and implementational comments to the current workflow. Furthermore, content issues are discussed. Eventually, ideas for future work are discussed. This thesis ends with a conclusion and a take-home message.
+
+\section{Workflow \& Implementation}\label{sec:workflow}
 In the following, the general workflow for analyzing the LGBT reception within newspapers is described. Subsequently, the concrete decisions concerning the implementation are addressed.
 
 \subsection*{Workflow} The overall workflow is shown in Fig.~\ref{fig:workflow}. The upper part reflects the first step of collecting newspaper articles and creating a database. For each term from a predefined list of query terms, an HTTP request to the API of an online newspaper archive is sent. In this work, the Article Search API of the New York Times\footnote{\url{https://developer.nytimes.com/}} has been used as it provides access to articles published since its foundation in 1851 and thus enables an extensive time-dependent analysis. Furthermore, the returned JSON documents contain not only a URL to the actual article but also textual attributes like the lead paragraph and the publication date. The analysis is based on these text fields. Hence, no further call for the complete article is necessary. Since the access to the NYT API is limited per second and per day, the responses are parsed and stored into a MySQL\footnote{\url{https://www.mysql.com/}} database. A relational database allows a quick access to the data along with SQL as a powerful query language for data selection and summarization. By using the database, subsequent analysis is based on the whole corpus independent of the API. Furthermore, the proposed workflow is more flexible with respect to adding data from an additional newspaper archive since its response only has to be mapped to the schema of the database while the analysis module (lower part of the workflow in Fig.~\ref{fig:workflow}) remains unaffected.
@@ -92,7 +95,7 @@ The last step is the calculation of significant cooccurrences. Following \citep{
 
 
 
-\section{Underlying Data}
+\section{Underlying Data}\label{sec:underlyingdata}
 
 Choosing the underlying data and retrieving it correctly was a crucial part of our work. Not only we had to (choose) terms that are most used in an LGBT context but also we had to filter the content for relevant articles in our case. There are a lot of terms but not all of them are useful for analysis. In the end we came up with 6 useful terms that delivered enough data to be relevant. These are: \textit{bisexual}, \textit{gay community}, \textit{homosexual}, \textit{lesbian}, \textit{transgender} and \textit{transsexual} making in sum $44,485$ articles and a mean of $95.38\%$ of all articles with these search terms in the NYT database. 
 
@@ -131,15 +134,15 @@ Why did we choose those words as our data foundation? Firstly they are diverse. 
 
 
 Why didn't we choose other words that are even more prominent for example \textit{gay}? This has several reasons. Let's stay with the word \textit{gay}. It doesn't have an exclusive meaning just in LGBT context. It also means \textit{happy} meaning we would have gotten lots of articles that have nothing to do with our research topic because it was used in the sense of \textit{being happy}. Another reason is, that gay is also a quit common name or part of a name. 
-There are a lot of other terms we didn't use due to reasons like not enough relevance, usage in specific context and or not given researchability. 
+There are a lot of other terms we did not use due to reasons like not enough relevance, usage in specific context and or not given researchability. 
 
 One thing we thought about analyzing but decided against eventually was a visualization of geographical information. Only 37\% of all articles have an assigned geographical location. Thus, we doubted the relevance of such a visualization.
 
-So we have a lot of articles but that's just one part. The other part is sentiment analysis and topic modeling to really get something out of the texts. For sentiment analysis, we focused on the 1980s and 2010s because for both decades have many articles and we wanted to compare two times which we expected to have very different reports on LGBT. An extended sentiment analysis for other decades would have gone beyond the scope of this work.
+So we have a lot of articles but that is just one part. The other part is sentiment analysis and topic modeling to really get something out of the texts. For sentiment analysis, we focused on the 1980s and 2010s because for both decades have many articles and we wanted to compare two times which we expected to have very different reports on LGBT. An extended sentiment analysis for other decades would have gone beyond the scope of this work.
 
 The analyses are based on the \textit{lead paragraph} attribute of each article. 94\% of the articles have such a paragraph. Nevertheless, it is not necessarily the case that a lead paragraph assigned to a certain query term actually contains this query term. For instance, although there are $4,920$ `bisexual' articles in the database, only 570 of these articles have a lead paragraph containing \textit{bisexual}. Nevertheless, there are 1495 lead paragraphs containing \textit{bisexual} in the whole database. The difference emerges from the fact that the NYT API does not search within the lead paragraph but only in the headline, byline and body. As our textual analyses are based on the lead paragraph, the count of target terms in all paragraphs in the database is shown in Tab.~\ref{tab:dataBasis}.
 
-Because on target word can occur in more than one lead paragraph, paragraph duplicates are expected. Within the database, 28\% of all lead paragraphs occur more than once. Duplicates are eliminated during selection of paragraphs from the database.
+Because one target word can occur in more than one lead paragraph, paragraph duplicates are expected. Within the database, 28\% of all lead paragraphs occur more than once. Duplicates are eliminated during selection of paragraphs from the database.
 
 \begin{table}
 \centering
@@ -160,7 +163,11 @@ transsexual  & $1,229$ & 279\\
 \end{tabular}
 \end{table}
 
+A brief glance at the article type reveals that most articles (in a broader sense) are news ($56.1\%$). Articles (in a narrow sense) and reviews are about $10.2\%$ in each case. Approximately $6.0\%$ of all articles are actually blogs. All other types, e.g. letter, interview, or editorial, occur less than $5\%$. No further analyses are based on the type information.
+
 Finally, the created corpus has been compared with the Google Books corpus accessed by the Ngram Viewer.\footnote{\url{https://books.google.com/ngrams}} Fig.~\ref{fig:google} shows the relative frequency for LGBT-related terms in American English books. The upper diagram contains our query terms while the lower one visualizes the occurrence of other LGBT terms. Very prominent is the maximum of \textit{lesbian} (red line) in the late 90s. A closer look at our corpus reveals that there is a similar maximum for \textit{lesbian} but some years earlier. Since newspaper articles are assumed to reflect events more immediately than books, we concluded that it is the same maximum. However, the decrease of \textit{bisexual}, \textit{homosexual}, and \textit{lesbian} since the late 90s, can be only confirmed for \textit{homosexual} in our corpus. The steady increase of \textit{transgender} and \textit{transsexual} is attested in both corpora. The lower diagram shows the frequency of \textit{gay} and \textit{queer}. The characteristic of both terms is that they are present in the literature long before the upper terms occur. Furthermore, as soon as the upper terms emerged, the frequency of \textit{gay} and \textit{queer} decreased while an increase can be observed since the 90s. The hypothesis is that these terms changed their meaning in an infrequent phase from 1940 to 1990 and since that they have been frequently used as LGBT terms.
+
+Overall, the comparison the the Google Books corpus shows that we can assume our data to be representative. Furthermore, it supports the decision to exclude \textit{gay} and \textit{queer} from the query terms as their behavior is different to the actual query terms.
 
 \begin{figure*}
 \centering
@@ -174,7 +181,9 @@ Finally, the created corpus has been compared with the Google Books corpus acces
 
 
 
-\section{Results}
+\section{Results}\label{sec:results}
+
+
 
 \subsection{Sentiment Analysis}
 
@@ -187,16 +196,16 @@ To test both explanations, further articles were extracted from the NYT article 
 \caption{Frequency of sentiments.}\label{fig:sentiment1}
 \end{figure} 
 
+
 It is important to bring to mind that the output of the sentiment analysis is not a sentiment category in the first place. Rather, an vector of probabilities is returned.  Hence, it might be possible that the competition between sentiments was very close. For the sentiment vector $v_{s_1} = \langle 0.0, 0.46, 0.1, 0.44, 0.0\rangle$, for example, the decision for \textit{negative} and against \textit{positive} is very close since the difference in the probabilities is marginal. However, for the vector $v_{s_2} = \langle 0.0, 0.8, 0.1, 0.1, 0.0\rangle$ it is clear that the sentence $s_2$ has a negative sentiment.
 
-But also on the underlying probability level, the results are equal for all conditions. The averaged probabilities are summarized in Tab.~\ref{tab:prob}. For the articles from the 1980s (2010s), the standard deviation is less than $1.3$ ($1.5$) percent points. Since the expected probability of each sentiment is $^{100\%}/_{5} = 20\%$  for a random distribution, a probability for \textit{negative} greater than $40\%$ can be seen as a clear result. Nevertheless, there is still a certain probability of about $20\%$ that such sentences are \textit{neutral} instead of \textit{negative}. A similar pattern emerges for \textit{football}.
 
 \begin{table*}
 \centering
 \caption{Average sentiment probabilities.} \label{tab:prob}
 \begin{tabular}{lccccc}
 \toprule
-data & very negative & negative & neutral & positive & very positive\\
+ & very neg. & negative & neutral & positive & very pos.\\
 \midrule
 LGBT, 1980s & 16.9\% & 51.0\% & 20.5\% & 8.7\% & 2.8\%\\
 LGBT, 2010s & 16.5\% & 51.9\% & 19.8\% & 8.8\% & 3.0\%\\
@@ -205,15 +214,9 @@ football &  13.6\% & 44.8\% & 21.3\% & 14.4\% & 5.9\%\\
 \end{tabular}
 \end{table*}
 
+But also on the underlying probability level, the results are equal for all conditions. The averaged probabilities are summarized in Tab.~\ref{tab:prob}. For the articles from the 1980s (2010s), the standard deviation is less than $1.3$ ($1.5$) percent points. Since the expected probability of each sentiment is $^{100\%}/_{5} = 20\%$  for a random distribution, a probability for \textit{negative} greater than $40\%$ can be seen as a clear result. Nevertheless, there is still a certain probability of about $20\%$ that such sentences are \textit{neutral} instead of \textit{negative}. A similar pattern emerges for \textit{football}.
+
 To summarize, the sentiment analysis showed no differences between target terms or different times. A detailed evaluation of the precision of the sentiments is presented in the discussion.
-
-\subsection{Simple Topic Modeling}
-For all LGBT terms, ten main topics could be determined. First, the topic \textsc{lgbt-related terms} describes the occurrence of a target term with other LGBT-related terms. Fig.~\ref{fig:topic_lgbt} shows whether a target term appears in contexts with this topic at a certain time. Dashed lines indicate that the topic is present but not very often whereas a solid line denotes that the topic is very frequent. The topics of particular target terms are discussed below.
-
-Second, \textsc{rights/law} is a very frequent topic. It contains court decisions or governmental statements to LGBT issues. Its incidences are shown in Fig.~\ref{fig:topic_rigths}. Third, an important topic is \textsc{discrimination/violence}, see Fig.~\ref{fig:topic_violence}. It covers not only discriminating utterances but also bodily harm and murder. The topic \textsc{sex/identity/relationship} covers the question of social and psychological identity as well as (same-sex) marriage. It is shown in Fig.~\ref{fig:topic_identity}. The next two topics \textsc{military} and \textsc{religion} describe the acceptance of LGBT people within a certain social environment, namely the military, Fig.~\ref{fig:topic_military}, and the religious institutions, Fig.~\ref{fig:topic_religion}. In addition, the topic \textsc{activists/movement/organizations} occurs whenever it is reported on people standing up for LGBT rights and equality. Its incidences is visualized in Fig.~\ref{fig:topic_activ}. Another topic, especially frequent in the context of AIDS in the 1980s, is \textsc{health}, see Fig.~\ref{fig:topic_health}. The topic \textsc{television/film/other media} is assigned to articles talking about LGBT people in movies, series or other media. The incidences of this topic are shown in Fig.~\ref{fig:topic_tv}. Finally, many articles deal with the acceptance and integration of LGBT people in educational institutions. The occurences of this topic \textsc{school} are presented in Fig.~\ref{fig:topic_school}.
-
-
-
 
 \begin{figure*}
 \begin{minipage}{0.48\textwidth}
@@ -251,68 +254,36 @@ Second, \textsc{rights/law} is a very frequent topic. It contains court decision
 \end{minipage}
 \end{figure*}
 
+\subsection{Simple Topic Modeling}
+For all LGBT terms, ten main topics could be determined. First, the topic \textsc{lgbt-related terms} describes the occurrence of a target term with other LGBT-related terms. Fig.~\ref{fig:topic_lgbt} shows whether a target term appears in contexts with this topic at a certain time. Dashed lines indicate that the topic is present but not very often whereas a solid line denotes that the topic is very frequent. The topics of particular target terms are discussed below.
 
-%\begin{figure}
-%\centering
-%\includegraphics[width=\columnwidth]{figures/topic_lgbt}
-%\caption{Incidence of the topic \textsc{lgbt-related terms}.}
-%\end{figure}
-%
-%\begin{figure}
-%\centering
-%\includegraphics[width=\columnwidth]{figures/topic_rights}
-%\caption{Incidence of the topic \textsc{righs/law}.}
-%\end{figure}
-%
-%\begin{figure}
-%\centering
-%\includegraphics[width=\columnwidth]{figures/topic_violence}
-%\caption{Incidence of the topic \textsc{discrimination/violence}.}
-%\end{figure}
-%
-%\begin{figure}
-%\centering
-%\includegraphics[width=\columnwidth]{figures/topic_identity}
-%\caption{Incidence of the topic \textsc{sex/identity/relationship}.}
-%\end{figure}
-%
-%\begin{figure}
-%\centering
-%\includegraphics[width=\columnwidth]{figures/topic_military}
-%\caption{Incidence of the topic \textsc{military}.}
-%\end{figure}
-%
-%\begin{figure}
-%\centering
-%\includegraphics[width=\columnwidth]{figures/topic_religion}
-%\caption{Incidence of the topic \textsc{religion}.}
-%\end{figure}
-%
-%\begin{figure}
-%\centering
-%\includegraphics[width=\columnwidth]{figures/topic_activists}
-%\caption{Incidence of the topic \textsc{activists/movement/organizations}.}
-%\end{figure}
-%
-%\begin{figure}
-%\centering
-%\includegraphics[width=\columnwidth]{figures/topic_health}
-%\caption{Incidence of the topic \textsc{health}.}
-%\end{figure}
-%
-%\begin{figure}
-%\centering
-%\includegraphics[width=\columnwidth]{figures/topic_tv}
-%\caption{Incidence of the topic \textsc{television/film/other media}.}
-%\end{figure}
-%
-%\begin{figure}
-%\centering
-%\includegraphics[width=\columnwidth]{figures/topic_school}
-%\caption{Incidence of the topic \textsc{school}.}
-%\end{figure}
+Second, \textsc{rights/law} is a very frequent topic. It contains court decisions or governmental statements to LGBT issues. Its incidences are shown in Fig.~\ref{fig:topic_rigths}. Third, an important topic is \textsc{discrimination/violence}, see Fig.~\ref{fig:topic_violence}. It covers not only discriminating utterances but also bodily harm and murder. The topic \textsc{sex/identity/relationship} covers the question of social and psychological identity as well as (same-sex) marriage. It is shown in Fig.~\ref{fig:topic_identity}. The next two topics \textsc{military} and \textsc{religion} describe the acceptance of LGBT people within a certain social environment, namely the military, Fig.~\ref{fig:topic_military}, and the religious institutions, Fig.~\ref{fig:topic_religion}. In addition, the topic \textsc{activists/movement/organizations} occurs whenever it is reported on people standing up for LGBT rights and equality. Its incidences is visualized in Fig.~\ref{fig:topic_activ}. Another topic, especially frequent in the context of AIDS in the 1980s, is \textsc{health}, see Fig.~\ref{fig:topic_health}. The topic \textsc{television/film/other media} is assigned to articles talking about LGBT people in movies, series or other media. The incidences of this topic are shown in Fig.~\ref{fig:topic_tv}. Finally, many articles deal with the acceptance and integration of LGBT people in educational institutions. The occurences of this topic \textsc{school} are presented in Fig.~\ref{fig:topic_school}.
 
-\section{Discussion}
+\paragraph*{Homosexual} According to the target term \textit{homosexual} the change over time was very good observable. Homosexuality was the first non-heterosexual orientation which rose to public awareness. Until the 19th century, there were strict laws against homosexual relationships all over the world, which disappeared very slowly and gradually. The simple topic modeling is based an articles dating back to the middle of the 20th century. For earlier published articles, not enough data has been available. The articles were grouped by their publication date. Each group covers a decade and has been evaluated independently. In the 50s, just a few words were encountered, but all of them can be sorted into the topic \textsc{discrimination/violence}. While we still found a lot of words matching that context, a new topic arose in the 60s, which should stay across the following years and gain more and more importance: \textsc{righs/law}. There were a lot of articles about new governmental decisions and developments in the gay rights. That can be agreed with the fact, that in the 60s more and more countries decriminalized sodomy or homosexuality itself, so for example, Illinois was the first federal state of the USA to decriminalize sodomy in 1962. But nevertheless it still was a time of hate and discrimination of homosexuals, who gained more and more popularity. This rising of awareness persisted in the following decade and led to the appearance of more and more topics, e.g. \textsc{television/film/other media}: movies about homosexuality or with openly homosexual actors. Beside the rights and the discrimination, there were reports about the identity of homosexuals and activism groups supporting the rights and interests of the gay community. According to the increasing prominence, the church began to encounter the gay community, because homosexuality was seen as being incompatible with religious beliefs or the bible. Religious organizations were formed and acted against the homosexual movement. In addition, this time was the beginning of the popularity of the LGBT and it were not only the homosexuals about which was reported but other sexual orientation, as for example bisexuality came to the fore.
+
+The 80s were a heavy setback for the LGBT-community as it was the time of the AIDS-epidemic, for which the homosexuals were blamed as a vector of diseases. It was a hard time and the newspaper were marked by reports of death, illness and the epidemic itself. So it was the AIDS-epidemic which mainly moved this decade (\textsc{health}), accompanied with a few reports about groups of activists supporting the homosexuals and discrimination they had to face.
+
+After the epidemic was kept at bay, an other topic occupied the homosexual movement: the marriage. In 1989, Denmark was the first country worldwide to allow a same sex union and in the 90s a lot of nations followed their example. This is reflected in the newspapers: There was a big popularity in the topics \textsc{sex/identity/relationship} (with focus on identity issues), \textsc{righs/law}, \textsc{activists/movement/organizations} (with focus on groups and demonstrations), and as well in the topic \textsc{marriage}. The latter topic is especially relevant for the target term \textit{homosexual}. But there were still discrimination accompanying this achievement of equal rights, which could be seen in the topics. An other question popping up these times were the permission to serve in the army as homosexual man. The \textsc{health}-topic abated, while the general awareness of LGBT-topics expanded and the homosexuals showed more and more popularity in movies and the media in general.
+The marriage question was the last big problem to be solved in the history of LGBT. In the following decades, there popped up some smaller changes in law all over the time. The whole group of LGBT raised more and more awareness while discrimination still existed but decreased in comparison to the objective discussions about identity, sex and family. Homosexuality gained importance in the educational system and all in all has become a more and more equal part of the society over the years. Big questions are solved and one can hope that other LGBT-related topics will integrate as good as this old controversial subject in human history.
+
+\paragraph*{Bisexual} As seen in the subject of homosexuality, other LGBT-related subjects firstly appeared in the 70s. In this first decade bisexuality was only mentioned on the edge of homosexual topics, but in the 80s it gained big popularity. Being known for the AIDS-epidemic, the 80s were a hard time for the homosexuals – but also for the bisexual orientated people. Those were accused of being the transmissioner of the illness even more than the only homosexual orientated gay community. As being bisexual they were seen as the medium between the homosexuals and heterosexuals and in this way being the reason that the `illness of the homosexuals' affects the heterosexual orientated people. Because of this, bisexuality was mentioned a lot in articles about AIDS in the 80s, health and death were put into context with homosexuals and intravenous drug-users as those are the other transmission groups of the epidemic.
+
+After the epidemic, the bisexuals are mainly mentioned in LGBT-related contexts. They are also well known in the movie area as actor or in films dealing with LGBT topics, and bisexuality becomes a topic in schools and universities.
+
+Concluding it can be said, that bisexual is more like a follower in LGBT topics: It is often mentioned in coherence with other LGBT subjects, but apart from the popularity around the AIDS-epidemic, it is less a standalone theme and more a part of the big LGBT-movement.
+
+\paragraph*{Lesbian} Overall it can be said firstly that data for the term \textit{lesbian} concerning topic modeling is available from the 70s onwards. Further on what is obvious is that some topics, for example \textsc{health}, \textsc{religion}, or \textsc{military}, never have played a big role in a lesbian context. \textsc{rights/law} quickly rises to great importance and prominence as well as \textsc{activists/movement/organizations}, though there is more change in it than in rights over the course of time. Related terms of LGBT have a slightly higher relevance in the earlier data but it then decreases. The quite low prominence of \textsc{health} could be on one side linked to the overall silencing of the topic in everyday live and on the other side to the slightly lesser risk of infection through injuries by sexual intercourse. In the case of \textsc{military} it is probably due to the relatively low percentage of women in the army as whole of which are just another small percentage lesbians. \textsc{religion} cannot be explained for sure. The high relevance of \textsc{rights/law} as well as \textsc{activists/movement/organizations} could very well be linked to the feminist movement which became popular in 1968. Terms related to \textit{violence} can be found but have compared to other terms in each decade a fairly low relevance. Why also\textsc{sex/identity/relationship} with focus on identity is overall low could be explained by the different opinions among the lesbian community but that is just an idea and it could have very well other reasons. As seen also in the discussion for sentiment analysis in subsection~\ref{subsex:contentIssues}, \textsc{television/film/other media} has a relatively great importance among the lesbian community.
+
+\paragraph*{Transgender} Although the term \textit{transgender} emerged in the late 1960s \citep{Oliven:1965}, it occurs in the underlying corpus in the 1990s with a significant topic, namely \textsc{lgbt-related terms}. The reason is that there are no lead paragraphs for earlier articles. In the 2000s, many topics are connected to \textit{transgender}. \textsc{school} is not only relevant because of the general issue of integration but also because of various articles about the Harvey Milk High School, a high school designed for LGBT people. Newspapers started to report on the identity question of transgender people and as it is seen by the social surroundings. Transgender issues are relevant for court decision as well (\textsc{rights/law}). Discrimination merges in different areas, for instance housing.
+
+In the current decade, \textit{transgender} has similar topics as other LGBT groups: \textsc{military}, \textsc{religion}, \textsc{discrimination/ violence}, etc. Nevertheless, are some special topics. Such topics concern the usage of bathrooms, surgeries, treatment of transgender people in prison, or the acceptance of transgender children as boy scouts.
+
+\paragraph*{Transsexual} As for transgenders, the question of identity is very important to transsexuals as well. This topic emerged in the 1990s and was intensively discussed in the 2000s. Additionally, \textsc{rights/law} was also an influential topic those days. Nowadays, articles are published which deal with transsexuals in movies and series. For equality, it is reported on transsexual roles and actors. Interestingly, the surgery topic only occurred for \textit{transgender} but not for \textit{transsexual} although the transition from one sex to another is strongly related hormones or surgical procedures.
+
+\paragraph*{Queer} For \textit{queer}, the only significant topic besides \textsc{lgbt-related terms} is \textsc{television/film/other media} in the 2000s. Most articles reported on two famous television series: \textit{Queer Eye For the Straight Guy} (premiered 2003) and \textit{Queer as Folk} (2000-2005).
+
+
+\section{Discussion}\label{sec:discussion}
 First, implementational issues and technical challenges of the current workflow are discussed. Second, the discussion focuses on the evaluation of the results. Finally, proposals for future investigations are pointed out.
 
 \subsection{Implementation Issues}
@@ -331,14 +302,14 @@ The evaluation of the cooccurrences has revealed that there are still a lot of `
 // TODO: only cooccurrences of sentences? define max distance dynamically?
 // TODO: count the distance from coWord to the targetWord
 
-\subsection{Content Issues}
+\subsection{Content Issues}\label{subsex:contentIssues}
 
 
 
 
 \subsection{Future Work}
 
-\section{Conclusion}
+\section{Conclusion}\label{sec:conclusion}
 This is our awesome conclusion.
 
 {\footnotesize \bibliography{lit}}
